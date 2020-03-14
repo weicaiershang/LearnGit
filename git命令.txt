@@ -3,3 +3,4 @@
 3、git commit -m <message>：将缓冲区中的修改提交到版本库，并增加修改的信息；
 4、git status：查看当前目录的状态，比如那些文件修改了；
 5、git diff <file>：查看文件修改了哪些地方，终端会打印出来，之前使用svn没用过，很强大哦；
+6、git log：命令显示从最近到最远的提交日志，git log --pretty=oneline简介输出日志
