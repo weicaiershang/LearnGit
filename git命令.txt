@@ -3,4 +3,6 @@
 3、git commit -m <message>：将缓冲区中的修改提交到版本库，并增加修改的信息；
 4、git status：查看当前目录的状态，比如那些文件修改了；
 5、git diff <file>：查看文件修改了哪些地方，终端会打印出来，之前使用svn没用过，很强大哦；
-6、git log：命令显示从最近到最远的提交日志，git log --pretty=oneline简介输出日志
+6、git log：命令显示从最近到最远的提交日志，git log --pretty=oneline简介输出日志;
+7、git reset --hard <版本号>：回退版本号，git是以哈希表的方式管理版本号的，所以是一个很长的数字，但是你只用填写前面几个就行了。HEAD表示当前版本号，HEAD^表示当前版本的上一个版本，HEAD^^表示上两个版本，上n个版本可以表示为HEAD～n；
+8、git reflog:记录你每一次的命令
