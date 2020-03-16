@@ -13,7 +13,7 @@
 
 /*******************************************远程仓库使用*******************************************/
 12、git remote add origin git@server-name:path/repo-name.git：将本地的目录关联到远程服务器上，server一般是github.com，path为你在github上的用户名。
-13、git push origin master：将本地内容推送到远程服务器，第一次可以使用git push -u origin master，用以同步两边内容。
+13、git push origin master：将本地master分支内容推送到远程服务器origin分支，第一次可以使用git push -u origin master，用以同步两边内容。
 14、git clone：从远程仓库克隆到本地，具体使用如下：在当前路径打开终端，输入git clone git@github.com:usrname/dirName.git
 
 /*********************************************分支管理指令***************************************/
@@ -21,6 +21,65 @@
 16、git branch <name>：创建分支；
 17、git checkout <name>：切换分支 = git switch <name>；
 18、git checkout -b <name>：创建+切换分支 = git switch -c <name>；
-19、git merge <name>：合并分支；
-20、git branch -d <name>：删除分支；
+19、git merge <name>：合并分支，快速向前推进模式（fast forward），相当于是讲master的指针直接连到最新版本，删除分之后，分支的信息没有了；
+20、git branch -d <name>：删除已经合并过分支；
 21、git log --graph： 查看合并分支图；
+22、git merge --no-ff -m "merge with no-ff" dev：不使用快速向前推进的模式合并分支，相当于是将分支dev中的commit记录合并到了master中。
+
+
+分支管理原则：
+在实际开发中，我们应该按照几个基本原理进行分支管理：
+    首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
+    那在哪儿干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev合并到master上，在master分支上发布1.0版本；
+    你和你的小伙伴每个人都在dev分支上干活，每个人都有自己的分支，时不时的往dev上合并就可以了。
+    所以团队合作的分支开起来就想这样：
+    
+    @--------------------------------@-----------------------@-------master
+    \                               / \                     /
+     \@-------------@--------------@   @-----------@--------@---------dev
+      \            /              / \                      /
+       \@-----@---@------@---@- -@   @-----------@------ -@-----------bob
+       
+       
+23、git stash：（由于bug修改）将手头开发的工作暂存起来；
+24、git stash list：查看上述暂存区的备份；
+25、git stash pop:将最后的缓存还原出来；
+26、git cherry-pick <commit>：将修改的bug应用到当前分支，参数commit指的是提交bug分支的版本号；
+27、git branch -D <name>：丢弃一个没有被合并的分支，使用该命令强行删除；
+28、git remote -v:查看远程库信息；
+29、git checkout -b branch-name origin/branch-name：在本地创建和远程分支对应的分支，分支名最好保持一致；
+30、git branch --set-upstream branch-name origin/branch-name：将本地分支和远程分支关联；
+31、git push origin branch-name：将本地分支推送到远程；
+32、git pull：从远程抓取分支，如果有冲突，需要先处理冲突；
+33、git rebase：操作可以把本地未push的分叉提交历史整理成直线，rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比；
+
+
+/**********************************************git标签***************************************/
+34、git tag <tagname>：用于新建一个标签，默认为HEAD，也可以指定一个commit ID，如git tag v0.9 f52c633；
+35、git tag -a <tagname> -m "blablabla..."：为tag指定备注信息；
+36、git tag：查看所有标签，输出是以字母排序的；
+37、git show <tagname>：查看标签的备注信息；
+38、git push origin <tagname>：将本地标签推送到远程服务器；
+39、git push origin --tags:将本地所有标签推送至服务器；
+40、git tag -d <tagname>：删除一个本地标签；
+41、git push origin :refs/tags/<tagname>：删除远程服务器上标签；
+
+
+/***************************************忽略特殊文件*******************************************/
+在git的工作去新建  .gitignore 文件，在里面输入忽略的文件或目录，如：
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+# My configurations:
+db.ini
+deploy_key_rsa
